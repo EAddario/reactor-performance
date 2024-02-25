@@ -1,6 +1,7 @@
 package org.addario.blockingservice;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,13 +14,16 @@ import java.util.Random;
 @RequestMapping("/fibonacci") // http://localhost:8080/fibonacci
 public class FibonacciController {
     // http://localhost:8080/fibonacci
-    @GetMapping(path="/{num}")
-    public ResponseEntity<Long> getFibonacci(@PathVariable Long num) {
-        return new ResponseEntity<>(Fibonacci.calculate(num), HttpStatus.OK);
+    @GetMapping(path="/{num}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> getFibonacci(@PathVariable Long num) {
+        String result = String.format("%,d", Fibonacci.calculate(num));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping(path="/random")
-    public ResponseEntity<Long> getRandom() {
-        return new ResponseEntity<>(Fibonacci.calculate(new Random().nextLong(40)), HttpStatus.OK);
+    @GetMapping(path="/random", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> getRandom() {
+        Random rnd = new Random();
+        String result = String.format("%,d", Fibonacci.calculate(rnd.nextLong(40)));
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
