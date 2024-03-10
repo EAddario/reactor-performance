@@ -1,6 +1,6 @@
 package org.addario.reactiveservice;
 
-public class Fibonacci {
+public class FibonacciLong {
     //Highly inefficient Fibonacci algorithm used to simulate service load
     public static Long calculate(Long num) {
 
