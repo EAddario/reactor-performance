@@ -14,13 +14,13 @@ import java.util.Random;
 @RequestMapping("/fibonacci") // http://localhost:8080/fibonacci
 public class FibonacciController {
     // http://localhost:8080/fibonacci
-    @GetMapping(path="/{num}", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(path="/long/{num}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> getFibonacci(@PathVariable Long num) {
         String result = String.format("%,d", Fibonacci.calculate(num));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping(path="/random", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(path="/long/random", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> getRandom() {
         Random rnd = new Random();
         String result = String.format("%,d", Fibonacci.calculate(rnd.nextLong(40)));
