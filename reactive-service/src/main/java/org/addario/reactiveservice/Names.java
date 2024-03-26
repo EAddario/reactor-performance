@@ -24,26 +24,33 @@ public class Names {
 
         var finalCounts = Flux.fromIterable(namesList)
                 .buffer(Runtime.getRuntime().availableProcessors())
+                .parallel()
+                .runOn(Schedulers.newParallel("Aggregator"))
+                .sequential()
                 .flatMap(Names::processBatch)
                 .reduce(new HashMap<>(), Names::mergeIntermediateCount)
                 .flatMapIterable(HashMap::entrySet);
 
         return MathFlux.max(finalCounts, Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey);
-                //.block();
     }
 
-    private static HashMap<String, Long> mergeIntermediateCount(HashMap<String, Long> acc, Map<String, Long> intermediateResult) {
-        intermediateResult.forEach((name, intermediateCount) -> acc.merge(name, intermediateCount, Long::sum));
-        return acc;
+    public static Flux<String> getNamesList() {
+        return Flux.fromIterable(names);
+    }
+
+    private static HashMap<String, Long> mergeIntermediateCount(HashMap<String, Long> totalCount, Map<String, Long> intermediateResult) {
+        intermediateResult.forEach((name, intermediateCount) -> totalCount.merge(name, intermediateCount, Long::sum));
+        return totalCount;
     }
 
     private static Mono<Map<String, Long>> processBatch(List<String> batch) {
-
         return Flux.fromIterable(batch)
                 .groupBy(Function.identity())
+                .parallel()
+                .runOn(Schedulers.parallel())
                 .flatMap(group -> group.count().map(count -> Tuples.of(group.key(), count)))
-                .collectMap(Tuple2::getT1, Tuple2::getT2)
-                .subscribeOn(Schedulers.boundedElastic());
+                .sequential()
+                .collectMap(Tuple2::getT1, Tuple2::getT2);
     }
 }
