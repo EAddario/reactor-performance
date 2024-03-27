@@ -17,6 +17,10 @@ public class Names {
         return findName(namesList);
     }
 
+    public static List<String> getNamesList() {
+        return names;
+    }
+
     private static String findName(List<String> namesList) {
         Map<String, Long> counts = new HashMap<>();
 
