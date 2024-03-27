@@ -26,8 +26,8 @@ public class Names {
                 .buffer(Runtime.getRuntime().availableProcessors())
                 .parallel()
                 .runOn(Schedulers.newParallel("Aggregator"))
-                .sequential()
                 .flatMap(Names::processBatch)
+                .sequential()
                 .reduce(new HashMap<>(), Names::mergeIntermediateCount)
                 .flatMapIterable(HashMap::entrySet);
 
