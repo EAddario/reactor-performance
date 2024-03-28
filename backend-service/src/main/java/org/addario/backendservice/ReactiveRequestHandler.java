@@ -1,5 +1,6 @@
 package org.addario.backendservice;
 
+import lombok.extern.java.Log;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -9,11 +10,14 @@ import reactor.core.publisher.Mono;
 
 import java.util.Random;
 
+@Log
 @Service
 public class ReactiveRequestHandler {
     public Mono<ServerResponse> blockingFibonacciHandler(ServerRequest serverRequest) {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
+        log.info(STR."Calculating Fibonacci of \{num}");
         var responseMono = Mono.just(String.format("%,d", BlockingFibonacci.calculate(num)));
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
@@ -21,7 +25,9 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> blockingRandomFibonacciHandler(ServerRequest serverRequest) {
         var rnd = new Random().nextLong(40);
+        log.info(STR."Calculating Fibonacci of \{rnd}");
         var responseMono = Mono.just(String.format("%,d", BlockingFibonacci.calculate(rnd)));
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
@@ -29,7 +35,9 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> reactiveFibonacciHandler(ServerRequest serverRequest) {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
+        log.info(STR."Calculating Fibonacci of \{num}");
         var responseMono = ReactiveFibonacci.calculate(num).map(v -> String.format("%,d", v));
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
@@ -37,7 +45,9 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> reactiveRandomFibonacciHandler(ServerRequest serverRequest) {
         var rnd = new Random().nextLong(40);
+        log.info(STR."Calculating Fibonacci of \{rnd}");
         var responseMono = ReactiveFibonacci.calculate(rnd).map(v -> String.format("%,d", v));
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
@@ -47,14 +57,18 @@ public class ReactiveRequestHandler {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
         num = Math.max(num, 1);
         num = Math.min(num, 1_000_000_000);
+        log.info(STR."Generating \{String.format("%,d", num)} random names");
         var responseMono = Mono.just(BlockingNames.getName(num));
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
     }
 
     public Mono<ServerResponse> blockingNamesListHandler(ServerRequest serverRequest) {
-        var responseFlux = Flux.fromIterable(BlockingNames.getNamesList());
+        log.info("Retrieving list of names");
+        var responseFlux = Flux.fromIterable(BlockingNames.getNamesList()).map(str -> STR."\{str}\n");
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseFlux, String.class);
@@ -64,21 +78,27 @@ public class ReactiveRequestHandler {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
         num = Math.max(num, 1);
         num = Math.min(num, 1_000_000_000);
+        log.info(STR."Generating \{String.format("%,d", num)} random names");
         var responseMono = ReactiveNames.getName(num);
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseMono, String.class);
     }
 
     public Mono<ServerResponse> reactiveNamesListHandler(ServerRequest serverRequest) {
-        var responseFlux = ReactiveNames.getNamesList();
+        log.info("Retrieving list of names");
+        var responseFlux = ReactiveNames.getNamesList().map(str -> STR."\{str}\n");
+
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(responseFlux, String.class);
     }
 
     public Mono<ServerResponse> reactiveNamesListStreamHandler(ServerRequest serverRequest) {
+        log.info("Retrieving list of names");
         var responseFlux = ReactiveNames.getNamesList();
+
         return ServerResponse.ok()
                 .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(responseFlux, String.class);
