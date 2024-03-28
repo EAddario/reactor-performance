@@ -32,6 +32,7 @@ public class ReactiveRouterConfig {
                 .GET("/reactive/name/{num}", requestHandler::reactiveNameHandler)
                 .GET("/reactive/nameslist", requestHandler::reactiveNamesListHandler)
                 .GET("/reactive/nameslist/stream", requestHandler::reactiveNamesListStreamHandler)
+                .onError(Exception.class, (e, req) -> ServerResponse.badRequest().bodyValue(STR."Error: \{e.getMessage()}"))
                 .build();
     }
 }
