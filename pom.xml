@@ -16,11 +16,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>blocking-service</module>
-        <module>reactive-service</module>
+        <module>backend-service</module>
         <module>blocking-gateway</module>
         <module>reactive-gateway</module>
-        <module>backend-service</module>
     </modules>
 
 </project>
