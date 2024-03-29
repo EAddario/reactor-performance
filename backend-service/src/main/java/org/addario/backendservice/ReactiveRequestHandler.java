@@ -5,9 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @Log
@@ -67,11 +67,11 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> blockingNamesListHandler(ServerRequest serverRequest) {
         log.info("Retrieving list of names");
-        var responseFlux = Flux.fromIterable(BlockingNames.getNamesList()).map(str -> STR."\{str}\n");
+        var responseMono = ReactiveNames.getNamesList().collectList();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(responseFlux, String.class);
+                .body(responseMono, ArrayList.class);
     }
 
     public Mono<ServerResponse> reactiveNameHandler(ServerRequest serverRequest) {
@@ -88,11 +88,11 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> reactiveNamesListHandler(ServerRequest serverRequest) {
         log.info("Retrieving list of names");
-        var responseFlux = ReactiveNames.getNamesList().map(str -> STR."\{str}\n");
+        var responseMono = ReactiveNames.getNamesList().collectList();
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(responseFlux, String.class);
+                .body(responseMono, ArrayList.class);
     }
 
     public Mono<ServerResponse> reactiveNamesListStreamHandler(ServerRequest serverRequest) {

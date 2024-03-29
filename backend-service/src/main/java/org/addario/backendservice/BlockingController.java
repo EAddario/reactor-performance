@@ -78,10 +78,10 @@ public class BlockingController {
     }
 
     @GetMapping(path="/reactive/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Flux<String>> getReactiveNamesList() {
+    public ResponseEntity<Mono<List<String>>> getReactiveNamesList() {
         log.info("Retrieving list of names");
 
-        return new ResponseEntity<>(ReactiveNames.getNamesList(), HttpStatus.OK);
+        return new ResponseEntity<>(ReactiveNames.getNamesList().collectList(), HttpStatus.OK);
     }
 
     @GetMapping(path="/reactive/nameslist/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
