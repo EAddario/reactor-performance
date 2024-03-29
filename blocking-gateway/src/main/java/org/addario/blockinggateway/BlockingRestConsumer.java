@@ -24,41 +24,49 @@ public class BlockingRestConsumer {
 
     public static String getBlockingFibonacci(Long num) {
         ResponseEntity<String> response = restTemplate.getForEntity("/blocking/fibonacci/{num}", String.class, num);
+
         return response.getBody();
     }
 
     public static String getBlockingRandomFibonacci() {
         ResponseEntity<String> response = restTemplate.getForEntity("/blocking/fibonacci/random", String.class);
+
         return response.getBody();
     }
 
     public static String getReactiveFibonacci(Long num) {
         ResponseEntity<String> response = restTemplate.getForEntity("/reactive/fibonacci/{num}", String.class, num);
+
         return response.getBody();
     }
 
     public static String getReactiveRandomFibonacci() {
         ResponseEntity<String> response = restTemplate.getForEntity("/reactive/fibonacci/random", String.class);
+
         return response.getBody();
     }
 
     public static String getBlockingName(int num) {
         ResponseEntity<String> response = restTemplate.getForEntity("/blocking/name/{num}", String.class, num);
+
         return response.getBody();
     }
 
     public static List<String> getBlockingNamesList() {
         ResponseEntity<String[]> response = restTemplate.getForEntity("/blocking/nameslist", String[].class);
+
         return Arrays.stream(Objects.requireNonNull(response.getBody())).toList();
     }
 
     public static String getReactiveName(int num) {
         ResponseEntity<String> response = restTemplate.getForEntity("/reactive/name/{num}", String.class, num);
+
         return response.getBody();
     }
 
     public static List<String> getReactiveNamesList() {
         ResponseEntity<String[]> response = restTemplate.getForEntity("/reactive/nameslist", String[].class);
+
         return Arrays.stream(Objects.requireNonNull(response.getBody())).toList();
     }
 }
