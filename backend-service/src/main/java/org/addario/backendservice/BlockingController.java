@@ -20,7 +20,7 @@ import java.util.Random;
 public class BlockingController {
     @GetMapping(path="/blocking/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingFibonacci(@PathVariable Long num) {
-        log.info(STR."Calculating Fibonacci of \{num}");
+        log.info(STR."getBlockingFibonacci: calculating Fibonacci of \{num}");
         var result = String.format("%,d", BlockingFibonacci.calculate(num));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -29,7 +29,7 @@ public class BlockingController {
     @GetMapping(path="/blocking/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingRandomFibonacci() {
         var rnd = new Random().nextLong(40);
-        log.info(STR."Calculating Fibonacci of \{rnd}");
+        log.info(STR."getBlockingRandomFibonacci: calculating Fibonacci of \{rnd}");
         var result = String.format("%,d", BlockingFibonacci.calculate(rnd));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class BlockingController {
 
     @GetMapping(path="/reactive/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mono<String>> getReactiveFibonacci(@PathVariable Long num) {
-        log.info(STR."Calculating Fibonacci of \{num}");
+        log.info(STR."getReactiveFibonacci: calculating Fibonacci of \{num}");
         var result = ReactiveFibonacci.calculate(num).map(v -> String.format("%,d", v));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -46,7 +46,7 @@ public class BlockingController {
     @GetMapping(path="/reactive/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mono<String>> getReactiveRandomFibonacci() {
         var rnd = new Random().nextLong(40);
-        log.info(STR."Calculating Fibonacci of \{rnd}");
+        log.info(STR."getReactiveRandomFibonacci: calculating Fibonacci of \{rnd}");
         var result = ReactiveFibonacci.calculate(rnd).map(v -> String.format("%,d", v));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -56,14 +56,14 @@ public class BlockingController {
     public ResponseEntity<String> getBlockingName(@PathVariable int num) {
         num = Math.max(num, 1);
         num = Math.min(num, 1_000_000_000);
-        log.info(STR."Generating \{String.format("%,d", num)} random names");
+        log.info(STR."getBlockingName: generating \{String.format("%,d", num)} random names");
 
         return new ResponseEntity<>(BlockingNames.getName(num), HttpStatus.OK);
     }
 
     @GetMapping(path="/blocking/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getBlockingNamesList() {
-        log.info("Retrieving list of names");
+        log.info("getBlockingNamesList: retrieving list of names");
 
         return new ResponseEntity<>(BlockingNames.getNamesList(), HttpStatus.OK);
     }
@@ -72,21 +72,21 @@ public class BlockingController {
     public Mono<ResponseEntity<String>> getReactiveName(@PathVariable int num) {
         num = Math.max(num, 1);
         num = Math.min(num, 1_000_000_000);
-        log.info(STR."Generating \{String.format("%,d", num)} random names");
+        log.info(STR."getReactiveName: generating \{String.format("%,d", num)} random names");
 
         return ReactiveNames.getName(num).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @GetMapping(path="/reactive/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mono<List<String>>> getReactiveNamesList() {
-        log.info("Retrieving list of names");
+        log.info("getReactiveNamesList: retrieving list of names");
 
         return new ResponseEntity<>(ReactiveNames.getNamesList().collectList(), HttpStatus.OK);
     }
 
     @GetMapping(path="/reactive/nameslist/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<String>> getReactiveNamesListStream() {
-        log.info("Retrieving list of names");
+        log.info("getReactiveNamesListStream: streaming list of names");
 
         return new ResponseEntity<>(ReactiveNames.getNamesList(), HttpStatus.OK);
     }
