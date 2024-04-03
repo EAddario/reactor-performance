@@ -26,7 +26,7 @@ public class ReactiveNames {
         var finalCounts = Flux.fromIterable(names)
                 .buffer(Runtime.getRuntime().availableProcessors())
                 .parallel()
-                .runOn(Schedulers.newParallel("Aggregator"))
+                .runOn(Schedulers.boundedElastic())
                 .flatMap(ReactiveNames::processBatch)
                 .sequential()
                 .reduce(new HashMap<>(), ReactiveNames::mergeIntermediateCount)
