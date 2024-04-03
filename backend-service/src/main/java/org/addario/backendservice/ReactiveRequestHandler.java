@@ -44,7 +44,7 @@ public class ReactiveRequestHandler {
     }
 
     public Mono<ServerResponse> reactiveRandomFibonacciHandler(ServerRequest serverRequest) {
-        var rnd = new Random().nextLong(40);
+        var rnd = new Random().nextLong(38);
         log.info(STR."reactiveRandomFibonacciHandler: calculating Fibonacci of \{rnd}");
         var responseMono = ReactiveFibonacci.calculate(rnd).map(v -> String.format("%,d", v));
 

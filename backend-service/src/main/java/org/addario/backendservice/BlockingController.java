@@ -45,7 +45,7 @@ public class BlockingController {
 
     @GetMapping(path="/reactive/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mono<String>> getReactiveRandomFibonacci() {
-        var rnd = new Random().nextLong(40);
+        var rnd = new Random().nextLong(38);
         log.info(STR."getReactiveRandomFibonacci: calculating Fibonacci of \{rnd}");
         var result = ReactiveFibonacci.calculate(rnd).map(v -> String.format("%,d", v));
 
