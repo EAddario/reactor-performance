@@ -23,11 +23,11 @@ public class BlockingNames {
             newNamesList.add(name);
             log.info(name);
 
-            try {
-                Thread.sleep(750L);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            //try {
+            //    Thread.sleep(750L);
+            //} catch (InterruptedException e) {
+            //    Thread.currentThread().interrupt();
+            //}
         }
 
         return newNamesList;

@@ -8,7 +8,6 @@ import reactor.math.MathFlux;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class ReactiveNames {
 
     public static Flux<String> getNamesList() {
         return Flux.fromIterable(namesList)
-                .delayElements(Duration.ofMillis(750L))
+                //.delayElements(Duration.ofMillis(750L))
                 .log("getNamesList", Level.INFO, SignalType.ON_NEXT);
     }
 
