@@ -103,7 +103,7 @@ h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$ST
 echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist stream ===============$reset_color" | tee -a $OUTFILE
-h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist/stream | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist stream ---------------$reset_color" | tee -a $OUTFILE
-h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist/stream | tee -a $OUTFILE
+# echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist stream ===============$reset_color" | tee -a $OUTFILE
+# h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist/stream | tee -a $OUTFILE
+# echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist stream ---------------$reset_color" | tee -a $OUTFILE
+# h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist/stream | tee -a $OUTFILE
