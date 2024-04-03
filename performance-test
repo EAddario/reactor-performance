@@ -1,0 +1,109 @@
+#!/bin/zsh
+autoload colors
+colors
+
+
+CLIENTS=10
+FIBONACCI=16
+NAMES=256
+OUTFILE=
+REQUESTS=10
+STREAMS=1
+THREADS=1
+
+
+# Define help
+usage() {
+    echo -e "\nUsage: $APP"
+    echo -e
+    echo -e "Tests reactive vs blocking servers"
+    echo -e
+    echo -e "Options:"
+    echo -e "  -c | --clients - Number of concurrent clients. Defaults to 10"
+    echo -e "  -f | --fibonacci - Fibonacci number to calculate. Defaults to 16"
+    echo -e "  -n | --names - Number of random names to generate. Defaults to 256"
+    echo -e "  -o | --output - Save output to named file. Defaults to stdout only"
+    echo -e "  -r | --requests  - Number of requests across all clients. Defaults to 10"
+    echo -e "  -s | --streams - Number of HTTP pipelining requests. Defaults to 1"
+    echo -e "  -t | --threads - Number of threads to use. Defaults to 1"
+    echo -e "  -h | --help - Displays usage information and then exits"
+    echo -e
+    exit 1
+}
+
+# Parse command line parameters
+while [[ $# -gt 0 ]] do
+    case $1 in
+        -h|--help)
+            usage
+            shift;;
+        -c|--clients)
+            CLIENTS="$2"
+            shift
+            shift;;
+        -f|--fibonacci)
+            FIBONACCI="$2"
+            shift
+            shift;;
+        -n|--names)
+            NAMES="$2"
+            shift
+            shift;;
+        -o|--output)
+            OUTFILE="$2"
+            shift
+            shift;;
+        -r|--requests)
+            REQUESTS="$2"
+            shift
+            shift;;
+        -s|--streams)
+            STREAMS="$2"
+            shift
+            shift;;
+        -t|--threads)
+            THREADS="$2"
+            shift
+            shift;;
+        *)
+            echo -e "Invalid option: $1"
+            usage;;
+    esac
+done
+
+echo -e "$fg_bold[blue]\nTest using Clients=$CLIENTS, Requests=$REQUESTS, Threads=$THREADS, Streams=$STREAMS, Fibonacci=$FIBONACCI and Names=$NAMES, $reset_color" | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking fibonacci ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/fibonacci/$FIBONACCI | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking fibonacci ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/fibonacci/$FIBONACCI | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive fibonacci ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/fibonacci/$FIBONACCI | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive fibonacci ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/fibonacci/$FIBONACCI | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking name ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/name/$NAMES | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking name ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/name/$NAMES | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive name ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/name/$NAMES | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive name ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/name/$NAMES | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking nameslist ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/nameslist | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking nameslist ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/nameslist | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist | tee -a $OUTFILE
+
+echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist stream ===============$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist/stream | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist stream ---------------$reset_color" | tee -a $OUTFILE
+h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist/stream | tee -a $OUTFILE
