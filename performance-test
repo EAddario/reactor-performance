@@ -2,7 +2,7 @@
 autoload colors
 colors
 
-
+APP=$0
 CLIENTS=10
 FIBONACCI=16
 NAMES=256
