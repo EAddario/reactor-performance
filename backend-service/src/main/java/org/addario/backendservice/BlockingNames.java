@@ -24,7 +24,7 @@ public class BlockingNames {
             log.info(name);
 
             //try {
-            //    Thread.sleep(750L);
+            //    Thread.sleep(500L);
             //} catch (InterruptedException e) {
             //    Thread.currentThread().interrupt();
             //}
@@ -37,7 +37,7 @@ public class BlockingNames {
         Map<String, Long> counts = new HashMap<>();
 
         for (String name : names) {
-            counts.compute(name, (__, c) -> c == null ? 1L : c + 1);
+            counts.compute(name, (__, c) -> c == null ? 1L : c + 1L);
         }
 
         return counts.entrySet()

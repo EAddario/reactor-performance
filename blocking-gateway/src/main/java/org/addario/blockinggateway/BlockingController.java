@@ -80,6 +80,6 @@ public class BlockingController {
     public ResponseEntity<String> getReactiveNamesListStream() {
         log.info("getReactiveNamesListStream: streaming list of names");
 
-        return ResponseEntity.ok("Handling streaming events with Spring MVC is beyond the scope of this demo");
+        return ResponseEntity.ok("Handling streaming of web responses with Spring MVC is beyond the scope of this demo");
     }
 }

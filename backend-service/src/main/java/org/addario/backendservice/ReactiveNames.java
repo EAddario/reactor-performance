@@ -38,7 +38,7 @@ public class ReactiveNames {
 
     public static Flux<String> getNamesList() {
         return Flux.fromIterable(namesList)
-                //.delayElements(Duration.ofMillis(750L))
+                //.delayElements(Duration.ofMillis(500L))
                 .log("getNamesList", Level.INFO, SignalType.ON_NEXT);
     }
 

@@ -9,9 +9,9 @@ public class ReactiveFibonacci {
     }
 
     private static Mono<Long> fibonacciNumber(Long num) {
-        if (num == 1) return Mono.just(1L);
-        if (num < 1) return Mono.just(0L);
+        if (num == 1L) return Mono.just(1L);
+        if (num < 1L) return Mono.just(0L);
 
-        return Mono.zip(fibonacciNumber(num - 1), fibonacciNumber(num - 2), Long::sum);
+        return Mono.zip(fibonacciNumber(num - 1L), fibonacciNumber(num - 2L), Long::sum);
     }
 }
