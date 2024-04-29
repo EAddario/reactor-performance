@@ -19,6 +19,7 @@ public class BlockingRestConsumer {
                 .rootUri("http://localhost:8080/rest")
                 .setConnectTimeout(Duration.ofSeconds(60))
                 .setReadTimeout(Duration.ofSeconds(300))
+                .errorHandler(new BlockingResponseErrorHandler())
                 .build();
     }
 
