@@ -3,11 +3,11 @@ autoload colors
 colors
 
 APP=$0
-CLIENTS=10
+CLIENTS=1
 FIBONACCI=16
 NAMES=256
 OUTFILE=
-REQUESTS=10
+REQUESTS=1
 STREAMS=1
 THREADS=1
 
@@ -19,11 +19,11 @@ usage() {
     echo -e "Tests reactive vs blocking servers"
     echo -e
     echo -e "Options:"
-    echo -e "  -c | --clients - Number of concurrent clients. Defaults to 10"
+    echo -e "  -c | --clients - Number of concurrent clients. Defaults to 1"
     echo -e "  -f | --fibonacci - Fibonacci number to calculate. Defaults to 16"
     echo -e "  -n | --names - Number of random names to generate. Defaults to 256"
-    echo -e "  -o | --output - Save output to named file. Defaults to stdout only"
-    echo -e "  -r | --requests  - Number of requests across all clients. Defaults to 10"
+    echo -e "  -o | --output <filename> - Save output to named file. Defaults to stdout only"
+    echo -e "  -r | --requests  - Number of requests across all clients. Defaults to 1"
     echo -e "  -s | --streams - Number of HTTP pipelining requests. Defaults to 1"
     echo -e "  -t | --threads - Number of threads to use. Defaults to 1"
     echo -e "  -h | --help - Displays usage information and then exits"
