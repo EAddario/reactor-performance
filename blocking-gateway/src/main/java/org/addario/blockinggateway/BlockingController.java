@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -15,9 +16,15 @@ public class BlockingController {
     @GetMapping(path="/blocking/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingFibonacci(@PathVariable Long num) {
         log.info(STR."getBlockingFibonacci: calculating Fibonacci of \{num}");
-        var response = BlockingRestConsumer.getBlockingFibonacci(num);
 
-        return ResponseEntity.ok(response);
+        try{
+
+            return ResponseEntity.ok(BlockingRestConsumer.getBlockingFibonacci(num));
+        } catch(HttpClientErrorException e) {
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping(path="/blocking/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -31,9 +38,15 @@ public class BlockingController {
     @GetMapping(path="/reactive/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getReactiveFibonacci(@PathVariable Long num) {
         log.info(STR."getReactiveFibonacci: calculating Fibonacci of \{num}");
-        var response = BlockingRestConsumer.getReactiveFibonacci(num);
 
-        return ResponseEntity.ok(response);
+        try{
+
+            return ResponseEntity.ok(BlockingRestConsumer.getReactiveFibonacci(num));
+        } catch(HttpClientErrorException e) {
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping(path="/reactive/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,9 +60,15 @@ public class BlockingController {
     @GetMapping(path="/blocking/name/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingName(@PathVariable int num) {
         log.info(STR."getBlockingName: generating \{String.format("%,d", num)} random names");
-        var response = BlockingRestConsumer.getBlockingName(num);
 
-        return ResponseEntity.ok(response);
+        try{
+
+            return ResponseEntity.ok(BlockingRestConsumer.getBlockingName(num));
+        } catch(HttpClientErrorException e) {
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping(path="/blocking/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,9 +82,15 @@ public class BlockingController {
     @GetMapping(path="/reactive/name/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getReactiveName(@PathVariable int num) {
         log.info(STR."getReactiveName: generating \{String.format("%,d", num)} random names");
-        var response = BlockingRestConsumer.getReactiveName(num);
 
-        return ResponseEntity.ok(response);
+        try{
+
+            return ResponseEntity.ok(BlockingRestConsumer.getReactiveName(num));
+        } catch(HttpClientErrorException e) {
+
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     @GetMapping(path="/reactive/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
