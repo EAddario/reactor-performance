@@ -73,37 +73,37 @@ done
 
 echo -e "$fg_bold[blue]\nTest using Clients=$CLIENTS, Requests=$REQUESTS, Threads=$THREADS, Streams=$STREAMS, Fibonacci=$FIBONACCI and Names=$NAMES, $reset_color" | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking fibonacci ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== blocking fibonacci -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/fibonacci/$FIBONACCI | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking fibonacci ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- blocking fibonacci -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/fibonacci/$FIBONACCI | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive fibonacci ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== reactive fibonacci -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/fibonacci/$FIBONACCI | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive fibonacci ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive fibonacci -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/fibonacci/$FIBONACCI | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking name ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== blocking name -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/name/$NAMES | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking name ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- blocking name -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/name/$NAMES | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive name ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== reactive name -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/name/$NAMES | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive name ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive name -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/name/$NAMES | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: blocking nameslist ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== blocking nameslist -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/blocking/nameslist | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: blocking nameslist ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- blocking nameslist -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/blocking/nameslist | tee -a $OUTFILE
 
-echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist ===============$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[red]=============== reactive nameslist -> blocking-gateway ===============$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist | tee -a $OUTFILE
-echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist ---------------$reset_color" | tee -a $OUTFILE
+echo -e "\n$fg_bold[green]--------------- reactive nameslist -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist | tee -a $OUTFILE
 
-# echo -e "\n$fg_bold[red]=============== blocking-gateway: reactive nameslist stream ===============$reset_color" | tee -a $OUTFILE
+# echo -e "\n$fg_bold[red]=============== reactive nameslist stream -> blocking-gateway  ===============$reset_color" | tee -a $OUTFILE
 # h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8081/reactive/nameslist/stream | tee -a $OUTFILE
-# echo -e "\n$fg_bold[green]--------------- reactive-gateway: reactive nameslist stream ---------------$reset_color" | tee -a $OUTFILE
+# echo -e "\n$fg_bold[green]--------------- reactive nameslist stream -> reactive-gateway ---------------$reset_color" | tee -a $OUTFILE
 # h2load --h1 --requests=$REQUESTS --clients=$CLIENTS --max-concurrent-streams=$STREAMS --threads=$THREADS http://localhost:8082/reactive/nameslist/stream | tee -a $OUTFILE
