@@ -1,5 +1,6 @@
 package org.addario.backendservice;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -7,6 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
+@EnableAutoConfiguration
 public class ReactiveRouterConfig {
     private final ReactiveRequestHandler requestHandler;
 
