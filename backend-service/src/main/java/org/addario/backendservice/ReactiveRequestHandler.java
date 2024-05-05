@@ -21,7 +21,7 @@ public class ReactiveRequestHandler {
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(String.format("%,d", BlockingFibonacci.calculate(num))), String.class);
+                    .body(Mono.fromCallable(() -> String.format("%,d", BlockingFibonacci.calculate(num))), String.class);
         } else {
             log.info(STR."blockingFibonacciHandler: \{num} is not between allowed range (0 and 40)");
 
@@ -38,7 +38,7 @@ public class ReactiveRequestHandler {
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(String.format("%,d", BlockingFibonacci.calculate(rnd))), String.class);
+                .body(Mono.fromCallable(() -> String.format("%,d", BlockingFibonacci.calculate(rnd))), String.class);
     }
 
     public Mono<ServerResponse> reactiveFibonacciHandler(ServerRequest serverRequest) {
@@ -77,7 +77,7 @@ public class ReactiveRequestHandler {
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(BlockingNames.getName(num)), String.class);
+                    .body(Mono.fromCallable(() -> BlockingNames.getName(num)), String.class);
         } else {
             log.info(STR."blockingNameHandler: \{num} is not between allowed range (1 and 1,000,000)");
 
