@@ -74,12 +74,14 @@
     </dependencies>
 
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <classifier>exec</classifier>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
