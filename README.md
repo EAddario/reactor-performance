@@ -2,7 +2,7 @@
 A simple project to compare and illustrate the advantages of reactive programming over imperative, using [project reactor](https://projectreactor.io/).
 
 ## Usage
-The project is composed by three services: a backend service and a two "gateway" services, one implementing a reactive style and the other, an imperative. Both will in turn call the backend service which does all of the work.
+The project is composed by three services: a backend service and two "gateway" services, one implementing a reactive style and the other, an imperative. Both will in turn call the backend service which does all of the work.
 
 ### blocking-gateway
 The `blocking-gateway` service is developed following the traditional Spring MVC approach, and relies on a Tomcat web server listening on port 8081. It exposes the following endpoints:
@@ -102,7 +102,7 @@ Options:
 ```
 For example, the command `performance-test -c 10 -r 10 -t 10 -s 10` will launch ten clients, each running on its own thread, and will perform one request per client to each of the gateway services. Running `performance-test` without any parameters will use the default values (one client, one thread, one request).
 
-It's advisible to run `performance-test` with no parameters at least once before increasing the load. This will enable the JVM's JIT compiler to optimize the code, and will provide a more accurate benchmark.
+It's advisible to run _performance-test_ with no parameters at least once before increasing the load. This will enable the JVM's JIT compiler to optimize the code, and will provide a more accurate benchmark.
 
 ## Release History
 * v1.0.0 - Initial release
