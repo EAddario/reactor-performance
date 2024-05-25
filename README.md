@@ -57,8 +57,11 @@ The `backend-service` service provides two groups of APIs. One following the Spr
 There are several ways to run the project. You can load and run from your favourite IDE, or you could use any of the below approaches, but bear in mind that both examples assume you'll have three terminals open at the root of the project (_./reactor-performance_) and that **Java 22** is the default version.
 
 #### using maven:
+
 From terminal 1, type: `mvn -f backend-service/ clean compile exec:exec`
+
 From terminal 2, type: `mvn -f blocking-gateway/ clean compile exec:exec`
+
 From terminal 3, type: `mvn -f reactive-gateway/ clean compile exec:exec`
 
 #### using java:
