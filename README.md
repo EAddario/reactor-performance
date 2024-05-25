@@ -100,7 +100,9 @@ Options:
   -t | --threads - Number of threads to use. Defaults to 1
   -h | --help - Displays usage information and then exits
 ```
-For example, the command `performance-test -c 10 -r 10 -t 10 -s 10` will launch ten clients, each running on its own thread, and will perform one request per client to each of the gateway services.
+For example, the command `performance-test -c 10 -r 10 -t 10 -s 10` will launch ten clients, each running on its own thread, and will perform one request per client to each of the gateway services. Running `performance-test` without any parameters will use the default values (one client, one thread, one request).
+
+It's advisible to run `performance-test` with no parameters at least once before increasing the load. This will enable the JVM's JIT compiler to optimize the code, and will provide a more accurate benchmark.
 
 ## Release History
 * v1.0.0 - Initial release
