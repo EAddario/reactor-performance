@@ -16,6 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>reactive-gateway</name>
     <description>reactive-gateway</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>22</java.version>

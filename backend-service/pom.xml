@@ -16,6 +16,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>backend-service</name>
     <description>backend-service</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>22</java.version>
