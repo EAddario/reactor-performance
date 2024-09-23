@@ -17,24 +17,23 @@ public class ReactiveRequestHandler {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
 
         if (num > -1L && num < 41L) {
-            log.info(STR."blockingFibonacciHandler: calculating Fibonacci of \{num}");
+            log.info("blockingFibonacciHandler: calculating Fibonacci of " + num);
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(Mono.fromCallable(() -> String.format("%,d", BlockingFibonacci.calculate(num))), String.class);
         } else {
-            log.info(STR."blockingFibonacciHandler: \{num} is not between allowed range (0 and 40)");
+            log.info("blockingFibonacciHandler: " + num + " is not between allowed range (0 and 40)");
 
             return ServerResponse.badRequest()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(STR."\{num} is not between allowed range (0 and 40)"), String.class);
+                    .body(Mono.just(num + " is not between allowed range (0 and 40)"), String.class);
         }
-
     }
 
     public Mono<ServerResponse> blockingRandomFibonacciHandler(ServerRequest serverRequest) {
         var rnd = new Random().nextLong(40);
-        log.info(STR."blockingRandomFibonacciHandler: calculating Fibonacci of \{rnd}");
+        log.info("blockingRandomFibonacciHandler: calculating Fibonacci of " + rnd);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -45,24 +44,23 @@ public class ReactiveRequestHandler {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
 
         if (num > -1 && num < 41) {
-            log.info(STR."reactiveFibonacciHandler: calculating Fibonacci of \{num}");
+            log.info("reactiveFibonacciHandler: calculating Fibonacci of " + num);
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(ReactiveFibonacci.calculate(num).map(v -> String.format("%,d", v)), String.class);
         } else {
-            log.info(STR."reactiveFibonacciHandler: \{num} is not between allowed range (0 and 40)");
+            log.info("reactiveFibonacciHandler: " + num + " is not between allowed range (0 and 40)");
 
             return ServerResponse.badRequest()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(STR."\{num} is not between allowed range (0 and 40)"), String.class);
+                    .body(Mono.just(num + " is not between allowed range (0 and 40)"), String.class);
         }
-
     }
 
     public Mono<ServerResponse> reactiveRandomFibonacciHandler(ServerRequest serverRequest) {
         var rnd = new Random().nextLong(38);
-        log.info(STR."reactiveRandomFibonacciHandler: calculating Fibonacci of \{rnd}");
+        log.info("reactiveRandomFibonacciHandler: calculating Fibonacci of " + rnd);
 
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -73,19 +71,18 @@ public class ReactiveRequestHandler {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
 
         if (num > 0 && num < 1_000_001) {
-            log.info(STR."blockingNameHandler: generating \{String.format("%,d", num)} random names");
+            log.info("blockingNameHandler: generating " + String.format("%,d", num) + " random names");
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(Mono.fromCallable(() -> BlockingNames.getName(num)), String.class);
         } else {
-            log.info(STR."blockingNameHandler: \{num} is not between allowed range (1 and 1,000,000)");
+            log.info("blockingNameHandler: " + num + " is not between allowed range (1 and 1,000,000)");
 
             return ServerResponse.badRequest()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(STR."\{num} is not between allowed range (1 and 1,000,000)"), String.class);
+                    .body(Mono.just(num + " is not between allowed range (1 and 1,000,000)"), String.class);
         }
-
     }
 
     public Mono<ServerResponse> blockingNamesListHandler(ServerRequest serverRequest) {
@@ -100,19 +97,18 @@ public class ReactiveRequestHandler {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
 
         if (num > 0 && num < 1_000_001) {
-            log.info(STR."reactiveNameHandler: generating \{String.format("%,d", num)} random names");
+            log.info("reactiveNameHandler: generating " + String.format("%,d", num) + " random names");
 
             return ServerResponse.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(ReactiveNames.getName(num), String.class);
         } else {
-            log.info(STR."reactiveNameHandler: \{num} is not between allowed range (1 and 1,000,000)");
+            log.info("reactiveNameHandler: " + num + " is not between allowed range (1 and 1,000,000)");
 
             return ServerResponse.badRequest()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Mono.just(STR."\{num} is not between allowed range (1 and 1,000,000)"), String.class);
+                    .body(Mono.just(num + " is not between allowed range (1 and 1,000,000)"), String.class);
         }
-
     }
 
     public Mono<ServerResponse> reactiveNamesListHandler(ServerRequest serverRequest) {

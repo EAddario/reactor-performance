@@ -22,22 +22,21 @@ public class BlockingController {
     public ResponseEntity<String> getBlockingFibonacci(@PathVariable Long num) {
 
         if (num > -1 && num < 41) {
-            log.info(STR."getBlockingFibonacci: calculating Fibonacci of \{num}");
+            log.info("getBlockingFibonacci: calculating Fibonacci of " + num);
             var result = String.format("%,d", BlockingFibonacci.calculate(num));
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            log.info(STR."getBlockingFibonacci: \{num} is not between allowed range (0 and 40)");
+            log.info("getBlockingFibonacci: " + num + " is not between allowed range (0 and 40)");
 
-            return new ResponseEntity<>(STR."\{num} is not between allowed range (0 and 40)", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(num + " is not between allowed range (0 and 40)", HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping(path="/blocking/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingRandomFibonacci() {
         var rnd = new Random().nextLong(40);
-        log.info(STR."getBlockingRandomFibonacci: calculating Fibonacci of \{rnd}");
+        log.info("getBlockingRandomFibonacci: calculating Fibonacci of " + rnd);
         var result = String.format("%,d", BlockingFibonacci.calculate(rnd));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -47,22 +46,21 @@ public class BlockingController {
     public ResponseEntity<Mono<String>> getReactiveFibonacci(@PathVariable Long num) {
 
         if (num > -1 && num < 41) {
-            log.info(STR."getReactiveFibonacci: calculating Fibonacci of \{num}");
+            log.info("getReactiveFibonacci: calculating Fibonacci of " + num);
             var result = ReactiveFibonacci.calculate(num).map(v -> String.format("%,d", v));
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            log.info(STR."getReactiveFibonacci: \{num} is not between allowed range (0 and 40)");
+            log.info("getReactiveFibonacci: " + num + " is not between allowed range (0 and 40)");
 
-            return new ResponseEntity<>(Mono.just(STR."\{num} is not between allowed range (0 and 40)"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Mono.just(num + " is not between allowed range (0 and 40)"), HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping(path="/reactive/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Mono<String>> getReactiveRandomFibonacci() {
         var rnd = new Random().nextLong(38);
-        log.info(STR."getReactiveRandomFibonacci: calculating Fibonacci of \{rnd}");
+        log.info("getReactiveRandomFibonacci: calculating Fibonacci of " + rnd);
         var result = ReactiveFibonacci.calculate(rnd).map(v -> String.format("%,d", v));
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -72,15 +70,14 @@ public class BlockingController {
     public ResponseEntity<String> getBlockingName(@PathVariable int num) {
 
         if (num > 0 && num < 1_000_001) {
-            log.info(STR."getBlockingName: generating \{String.format("%,d", num)} random names");
+            log.info("getBlockingName: generating " + String.format("%,d", num) + " random names");
 
             return new ResponseEntity<>(BlockingNames.getName(num), HttpStatus.OK);
         } else {
-            log.info(STR."getBlockingName: \{num} is not between allowed range (1 and 1,000,000)");
+            log.info("getBlockingName: " + num + " is not between allowed range (1 and 1,000,000)");
 
-            return new ResponseEntity<>(STR."\{num} is not between allowed range (1 and 1,000,000)", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(num + " is not between allowed range (1 and 1,000,000)", HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @GetMapping(path="/blocking/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -94,15 +91,14 @@ public class BlockingController {
     public Mono<ResponseEntity<String>> getReactiveName(@PathVariable int num) {
 
         if (num > 0 && num < 1_000_001) {
-            log.info(STR."getReactiveName: generating \{String.format("%,d", num)} random names");
+            log.info("getReactiveName: generating " + String.format("%,d", num) + " random names");
 
             return ReactiveNames.getName(num).map(ResponseEntity::ok).defaultIfEmpty(ResponseEntity.notFound().build());
         } else {
-            log.info(STR."getReactiveName: \{num} is not between allowed range (1 and 1,000,000)");
+            log.info("getReactiveName: " + num + " is not between allowed range (1 and 1,000,000)");
 
-            return Mono.just(ResponseEntity.badRequest().body(STR."\{num} is not between allowed range (1 and 1,000,000)"));
+            return Mono.just(ResponseEntity.badRequest().body(num + " is not between allowed range (1 and 1,000,000)"));
         }
-
     }
 
     @GetMapping(path="/reactive/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)

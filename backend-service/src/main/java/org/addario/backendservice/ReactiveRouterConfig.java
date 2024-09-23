@@ -34,7 +34,7 @@ public class ReactiveRouterConfig {
                 .GET("/reactive/name/{num}", requestHandler::reactiveNameHandler)
                 .GET("/reactive/nameslist", requestHandler::reactiveNamesListHandler)
                 .GET("/reactive/nameslist/stream", requestHandler::reactiveNamesListStreamHandler)
-                .onError(Exception.class, (e, _) -> ServerResponse.badRequest().bodyValue(STR."BackendService Error: \{e.getMessage()}"))
+                .onError(Exception.class, (e, _) -> ServerResponse.badRequest().bodyValue("BackendService Error: " + e.getMessage()))
                 .build();
     }
 }

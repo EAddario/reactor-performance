@@ -15,7 +15,7 @@ import java.util.List;
 public class BlockingController {
     @GetMapping(path="/blocking/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingFibonacci(@PathVariable Long num) {
-        log.info(STR."getBlockingFibonacci: calculating Fibonacci of \{num}");
+        log.info("getBlockingFibonacci: calculating Fibonacci of " + num);
 
         try{
 
@@ -24,7 +24,6 @@ public class BlockingController {
 
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @GetMapping(path="/blocking/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +36,7 @@ public class BlockingController {
 
     @GetMapping(path="/reactive/fibonacci/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getReactiveFibonacci(@PathVariable Long num) {
-        log.info(STR."getReactiveFibonacci: calculating Fibonacci of \{num}");
+        log.info("getReactiveFibonacci: calculating Fibonacci of " + num);
 
         try{
 
@@ -46,7 +45,6 @@ public class BlockingController {
 
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @GetMapping(path="/reactive/fibonacci/random", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +57,7 @@ public class BlockingController {
 
     @GetMapping(path="/blocking/name/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getBlockingName(@PathVariable int num) {
-        log.info(STR."getBlockingName: generating \{String.format("%,d", num)} random names");
+        log.info("getBlockingName: generating " + String.format("%,d", num) + " random names");
 
         try{
 
@@ -68,7 +66,6 @@ public class BlockingController {
 
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @GetMapping(path="/blocking/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,7 +78,7 @@ public class BlockingController {
 
     @GetMapping(path="/reactive/name/{num}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getReactiveName(@PathVariable int num) {
-        log.info(STR."getReactiveName: generating \{String.format("%,d", num)} random names");
+        log.info("getReactiveName: generating " + String.format("%,d", num) + " random names");
 
         try{
 
@@ -90,7 +87,6 @@ public class BlockingController {
 
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     @GetMapping(path="/reactive/nameslist", produces = MediaType.APPLICATION_JSON_VALUE)

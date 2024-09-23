@@ -12,13 +12,13 @@ import reactor.core.publisher.Mono;
 public class ReactiveRequestHandler {
     public Mono<ServerResponse> blockingFibonacciHandler(ServerRequest serverRequest) {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
-        log.info(STR."blockingFibonacciHandler: calculating Fibonacci of \{num}");
+        log.info("blockingFibonacciHandler: calculating Fibonacci of " + num);
 
         return ReactiveRestConsumer.getBlockingFibonacci(num)
                 .flatMap(responseMono -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(responseMono))
-                .onErrorResume(responseError -> Mono.just(STR."ReactiveGateway Error: \{responseError.getMessage()}")
+                .onErrorResume(responseError -> Mono.just("ReactiveGateway Error: " + responseError.getMessage())
                         .flatMap(responseMono -> ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(responseMono)));
@@ -35,13 +35,13 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> reactiveFibonacciHandler(ServerRequest serverRequest) {
         var num = Long.parseLong(serverRequest.pathVariable("num"));
-        log.info(STR."reactiveFibonacciHandler: calculating Fibonacci of \{num}");
+        log.info("reactiveFibonacciHandler: calculating Fibonacci of " + num);
 
         return ReactiveRestConsumer.getReactiveFibonacci(num)
                 .flatMap(responseMono -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(responseMono))
-                .onErrorResume(responseError -> Mono.just(STR."ReactiveGateway Error: \{responseError.getMessage()}")
+                .onErrorResume(responseError -> Mono.just("ReactiveGateway Error: " + responseError.getMessage())
                         .flatMap(responseMono -> ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(responseMono)));
@@ -58,13 +58,13 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> blockingNameHandler(ServerRequest serverRequest) {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
-        log.info(STR."blockingNameHandler: generating \{String.format("%,d", num)} random names");
+        log.info("blockingNameHandler: generating " + String.format("%,d", num) + " random names");
 
         return ReactiveRestConsumer.getBlockingName(num)
                 .flatMap(responseMono -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(responseMono))
-                .onErrorResume(responseError -> Mono.just(STR."ReactiveGateway Error: \{responseError.getMessage()}")
+                .onErrorResume(responseError -> Mono.just("ReactiveGateway Error: " + responseError.getMessage())
                         .flatMap(responseMono -> ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(responseMono)));
@@ -81,13 +81,13 @@ public class ReactiveRequestHandler {
 
     public Mono<ServerResponse> reactiveNameHandler(ServerRequest serverRequest) {
         var num = Integer.parseInt(serverRequest.pathVariable("num"));
-        log.info(STR."reactiveNameHandler: generating \{String.format("%,d", num)} random names");
+        log.info("reactiveNameHandler: generating " + String.format("%,d", num) + " random names");
 
         return ReactiveRestConsumer.getReactiveName(num)
                 .flatMap(responseMono -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(responseMono))
-                .onErrorResume(responseError -> Mono.just(STR."ReactiveGateway Error: \{responseError.getMessage()}")
+                .onErrorResume(responseError -> Mono.just("ReactiveGateway Error: " + responseError.getMessage())
                         .flatMap(responseMono -> ServerResponse.badRequest()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .bodyValue(responseMono)));

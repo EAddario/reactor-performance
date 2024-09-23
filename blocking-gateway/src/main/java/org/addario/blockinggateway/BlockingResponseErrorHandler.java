@@ -17,6 +17,6 @@ public class BlockingResponseErrorHandler implements ResponseErrorHandler {
 
     @Override
     public void handleError(ClientHttpResponse httpResponse) throws IOException {
-            throw new HttpClientErrorException(httpResponse.getStatusCode(), STR."BlockingGateway Error: \{httpResponse.getStatusText()}");
+            throw new HttpClientErrorException(httpResponse.getStatusCode(), "BlockingGateway Error: " + httpResponse.getStatusText());
     }
 }
