@@ -84,6 +84,7 @@
                     <release>${maven.compiler.release}</release>
                     <compilerArgs>
                         <arg>--enable-preview</arg>
+                        <arg>-proc:full</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
